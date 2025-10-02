@@ -1,0 +1,113 @@
+body {
+    background-color: #171821;
+    color: #FFF;
+}
+
+.box-section {
+    background-color: #21222d;
+    padding: 2rem;
+    border-radius: 16px;
+    -webkit-border-radius: 16px;
+    -moz-border-radius: 16px;
+    -ms-border-radius: 16px;
+    -o-border-radius: 16px;
+}
+
+.candidate-card-component {
+    background-color: #171821;
+    transition: box-shadow 0.3s ease;
+    -webkit-transition: box-shadow 0.3s ease;
+    -moz-transition: box-shadow 0.3s ease;
+    -ms-transition: box-shadow 0.3s ease;
+    -o-transition: box-shadow 0.3s ease;
+    .candidate-img {
+        position: relative;
+        .icon-trash {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #222;
+            color: #FFF;
+            padding: 4px 8px;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            -ms-border-radius: 5px;
+            -o-border-radius: 5px;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            /* flex-direction: column; */
+            font-size: 13px;
+            .trash-text {
+                font-size: 0.7rem;
+                font-weight: 500;
+            }
+        }
+    }
+    &:hover {
+        box-shadow: 0 0 20px 0 rgba(255, 255, 255, 0.1);
+    }
+    .candidate-text {
+        color: #a9dfd8;
+    }
+    button {
+        /* background-color: #a9dfd8; */
+        border: 1px solid #a9dfd8;
+        color: #FFF;
+        font-weight: 500;
+        border-radius: 50px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        -ms-border-radius: 50px;
+        -o-border-radius: 50px;
+        &.btn-save {
+            background-color: #a9dfd8;
+            color: #222;
+        }
+    }
+}
+
+.navigation {
+    font-size: 0.875rem;
+    border-right: 2px solid rgba(255, 255, 255, 0.1);
+    min-height: 100dvh;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: sticky;
+    top: 0;
+    left: 0;
+    a {
+        display: block;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        margin-bottom: 1rem;
+        line-height: 1;
+        position: relative;
+        &.nav-active {
+            color: #a9dfd8;
+            &::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                right: -1rem;
+                width: 3px;
+                height: 100%;
+                background-color: #a9dfd8;
+                margin-bottom: 0.5rem;
+                height: 100%;
+            }
+        }
+    }
+    .navigation-text {
+        font-weight: 100;
+        margin-top: 0.250rem;
+    }
+}
+
+select {
+    option {
+        color: #222;
+    }
+}
