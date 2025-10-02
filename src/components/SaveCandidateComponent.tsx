@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 // import type { RootState } from '../store'
 // import { useSelector, useDispatch } from 'react-redux';
 // import { updateCandidate } from "../store/candidatesSlice";
@@ -11,6 +11,11 @@ const SaveCandidateComponent = ({candidate}:any) => {
     // const dispatch = useDispatch();
 
     const [candidateData, setCandidateData] = useState(candidate);
+    const [relocation, setRelocation] = useState(candidate.relocation);
+
+    useEffect(() => {
+        setRelocation(candidate.relocation);
+    }, [candidate.relocation]);
 
     const handleDeleteCandidate = () => {
         alert("Eliminar");
@@ -40,6 +45,7 @@ const SaveCandidateComponent = ({candidate}:any) => {
                 <p style={{ color: "gray" }}>Location: {candidateData.location?.country}</p>
                 <p style={{ color: "gray" }}>Email: {candidateData.email}</p>
                 <p style={{ color: "gray" }}>Phone: {candidateData.phone}</p>
+                <p className="mt-4">Relocation <i className="fa-solid fa-arrow-right candidate-text"></i> {relocation}</p>
             </div>
         </div>
     );

@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import type { RootState } from '../store'
+import { updateRelocation } from "../store/saveCandidatesSlice";
 import { NavLink } from 'react-router-dom';
 import SaveCandidateComponent from "../components/SaveCandidateComponent";
 import AsideComponent from '../components/AsideComponent';
@@ -7,18 +8,19 @@ import COUNTRIES from '../constants/countries';
 
 
 const CandidatesManager = () => {
-    const saveCandidates = useSelector((state: RootState) => state.saveCandidates.data);
+    const dispatch = useDispatch();
+    const candidates = useSelector((state: RootState) => state.saveCandidates.data);
 
-    console.log("Candidatos actuales en Redux:", saveCandidates);
+    console.log("Candidatos actuales en Redux:", candidates);
 
-    const handleChangeCountryRelocate = (e: any) => {
+    const handleChangeCountryRelocate = (uuidCandidate: any,  e: any) => {
         let countryRelocate = e.target.value;
-        alert(countryRelocate);
+        dispatch(updateRelocation({ uuidCandidate, relocation: countryRelocate }));
     }
 
     // const dispatch = useDispatch();
 
-    if (!saveCandidates) return <div>Cargando...</div>;
+    if (!candidates) return <div>Cargando...</div>;
 
     return (
         <div className='grid grid-cols-12'>
@@ -29,28 +31,25 @@ const CandidatesManager = () => {
                 <div>
                     <h1 className="text-3xl mb-10 text-center">Manager Candidates</h1>
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-                        {saveCandidates.map((candidate: any) => (
-                            <div className='box-section'>
+                        {candidates.map((candidate: any) => (
+                            <div className='box-section' key={candidate.login.uuid}>
                                 <div className='mb-6'>
                                     <span>Relocate to:</span>
-                                    <select onChange={handleChangeCountryRelocate}>
-                                        {candidate.relocation === '' ? (
-                                            <>
-                                                <option value="0" disabled selected>
-                                                    Choose an option
-                                                </option>
-                                                {COUNTRIES.map((c: any) => (
-                                                    <option key={c} value={c}>
-                                                        {c}
-                                                    </option>
-                                                ))}
-                                            </>
-                                        ) : (
-                                            <option value="0">JOJO</option>
-                                        )}
+                                    <select
+                                        value={candidate.relocation || "0"}
+                                        onChange={(e) => handleChangeCountryRelocate(candidate.login.uuid, e)}
+                                    >
+                                        <option value="0" disabled>
+                                            Choose an option
+                                        </option>
+                                        {COUNTRIES.map((c: any) => (
+                                            <option key={c} value={c}>
+                                                {c}
+                                            </option>
+                                        ))}
                                     </select>
                                 </div>
-                                <SaveCandidateComponent candidate={candidate} key={candidate.login.uuid} />
+                                <SaveCandidateComponent candidate={candidate} />
                             </div>
                         ))}
                     </div>

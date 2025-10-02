@@ -17,12 +17,12 @@ const CandidateComponent = ({candidate}:any) => {
             const res = await fetch("https://randomuser.me/api/?results=1");
             const data = await res.json();
             const newCandidate = data.results[0];
-            const addCandidateWithRelocation = {...newCandidate, relocation: ""};
+            const addCandidateWithRelocation = {...newCandidate, relocation: "Unassigned"};
 
             setCandidateData(addCandidateWithRelocation);
             dispatch(updateCandidate({ login: candidateData.login, newData: addCandidateWithRelocation }));
             if (buttonName === 'btn-save') {
-                dispatch(saveCandidates({...candidateData, relocation: ""}));
+                dispatch(saveCandidates({...candidateData, relocation: "Unassigned"}));
             }
         } catch (err) {
             console.error("Error:", err);
