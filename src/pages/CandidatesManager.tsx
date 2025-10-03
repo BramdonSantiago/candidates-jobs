@@ -39,7 +39,7 @@ const CandidatesManager = () => {
                                         value={candidate.relocation || "0"}
                                         onChange={(e) => handleChangeCountryRelocate(candidate.login.uuid, e)}
                                     >
-                                        <option value="0" disabled>
+                                        <option value="0">
                                             Choose an option
                                         </option>
                                         {COUNTRIES.map((c: any) => (

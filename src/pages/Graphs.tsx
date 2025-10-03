@@ -7,6 +7,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import COUNTRIES from '../constants/countries';
 import { useState, useEffect } from "react";
+import { isThisMonth, isThisWeek, isToday, parseISO } from "date-fns";
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ChartDataLabels, ArcElement);
 
@@ -16,8 +17,10 @@ const Graphs = () => {
 
     const [filterCountry, setFilterCountry] = useState(COUNTRIES[0]);
     const [relocationCount, setRelocationCount] = useState(0);
-    // const [top3Countries, setTop3Countries] = useState();
     const [top3Countries, setTop3Countries] = useState<{ country: any; count: any }[]>([])
+    const [candidatesToday, setCandidatesToday] = useState(0);
+    const [candidatesWeek, setCandidatesWeek] = useState(0);
+    const [candidatesMonth, setCandidatesMonth] = useState(0);
 
     useEffect(() => {
         relocationCountryCounts(filterCountry);
@@ -27,6 +30,22 @@ const Graphs = () => {
         const top3 = getTop3Countries(candidates);
         setTop3Countries(top3);
     }, []);
+
+    useEffect(() => {
+        const candidatesCountToday = candidates.filter(candidate => 
+            isToday(parseISO(candidate.candidateAddAt)));
+        setCandidatesToday(candidatesCountToday.length);
+    }, [candidates]);
+    useEffect(() => {
+        const candidatesCountWeek = candidates.filter(candidate => 
+            isThisWeek(parseISO(candidate.candidateAddAt)));
+        setCandidatesWeek(candidatesCountWeek.length);
+    }, [candidates]);
+    useEffect(() => {
+        const candidatesCountMonth = candidates.filter(candidate => 
+            isThisMonth(parseISO(candidate.candidateAddAt)));
+        setCandidatesMonth(candidatesCountMonth.length);
+    }, [candidates]);
 
 
 
@@ -55,7 +74,7 @@ const Graphs = () => {
         datasets: [
             {
                 label: "Historical Candidates aggregates",
-                data: [3, 8, 20],
+                data: [candidatesToday, candidatesWeek, candidatesMonth],
                 backgroundColor: ["#fcb859", "#a9dfd8", "#f2c8ed"],
             },
         ],
