@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 
 
 
-const SaveCandidateComponent = ({candidate}:any) => {
+const SaveCandidateComponent = ({ candidate }: any) => {
     // const dispatch = useDispatch();
 
     const [candidateData, setCandidateData] = useState(candidate);
@@ -45,7 +45,20 @@ const SaveCandidateComponent = ({candidate}:any) => {
                 <p style={{ color: "gray" }}>Location: {candidateData.location?.country}</p>
                 <p style={{ color: "gray" }}>Email: {candidateData.email}</p>
                 <p style={{ color: "gray" }}>Phone: {candidateData.phone}</p>
-                <p className="mt-4">Relocation <i className="fa-solid fa-arrow-right candidate-text"></i> {relocation}</p>
+                <p className="mt-4">
+                    Relocation
+                    {relocation !== 'Unassigned' ? (
+                        <>
+                            <i className="fa-solid fa-arrow-right mx-2" style={{ color: "#fcb859" }}></i>
+                            <span style={{ color: "#fcb859" }}>{relocation}</span>
+                        </>
+                    ) : (
+                        <>
+                            <i className="fa-solid fa-arrow-right mx-2" style={{ color: "#f2c8ed" }}></i>
+                            <span style={{ color: "#f2c8ed" }}>{relocation}</span>
+                        </>
+                    )}
+                </p>
             </div>
         </div>
     );

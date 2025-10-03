@@ -16,17 +16,26 @@ const Graphs = () => {
 
     const [filterCountry, setFilterCountry] = useState(COUNTRIES[0]);
     const [relocationCount, setRelocationCount] = useState(0);
+    // const [top3Countries, setTop3Countries] = useState();
+    const [top3Countries, setTop3Countries] = useState<{ country: any; count: any }[]>([])
 
     useEffect(() => {
         relocationCountryCounts(filterCountry);
     }, [filterCountry]);
 
+    useEffect(() => {
+        const top3 = getTop3Countries(candidates);
+        setTop3Countries(top3);
+    }, []);
+
+
+
     const data = {
-        labels: ['México', 'Canadá', 'Spain'],
+        labels: top3Countries.map(c => c.country),
         datasets: [
             {
-                label: 'Country',
-                data: [12, 19, 3],
+                label: 'Countries',
+                data: top3Countries.map(c => c.count),
                 backgroundColor: '#a9dfd8',
             },
         ],
@@ -96,16 +105,29 @@ const Graphs = () => {
         setRelocationCount(countCandidatesOnCountry);
     };
 
-    // const relocationCountryCounts = (country: any) => {
-    //     let countCandidatesOnCountry = 0;
-    //     const relocationCounts = candidates.reduce((acc: Record<string, number>, candidate) => {
-    //     console.log(candidate.relocation);
-    //     if (candidate.relocation === country) {
-    //         countCandidatesOnCountry++;
-    //     }
-    //     }, {});
-    //     setRelocationCount(countCandidatesOnCountry);
-    // }
+    // function getTop3Countries(candidates: any) {
+    //     return Object.entries(
+    //         candidates.reduce((acc, cand) => {
+    //             acc[cand.relocation] = (acc[cand.relocation] || 0) + 1;
+    //             return acc;
+    //         }, {} as Record<string, number>)
+    //     )
+    //     .sort((a, b) => b[1] - a[1])
+    //     .slice(0, 3);
+    //     .map(([country, count]) => ({ country, count }));
+    // } 
+
+    function getTop3Countries(candidates: any) {
+        const counts = candidates.reduce((acc, cand) => {
+            acc[cand.relocation] = (acc[cand.relocation] || 0) + 1;
+            return acc;
+        }, {});
+
+        return Object.entries(counts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 3)
+            .map(([country, count]) => ({ country, count }));
+    }
 
 
     return (
