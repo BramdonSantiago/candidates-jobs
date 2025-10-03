@@ -151,10 +151,10 @@ const Graphs = () => {
 
     return (
         <div className='grid grid-cols-12'>
-            <aside className='col-span-1'>
+            <aside className='col-span-12 xl:col-span-1'>
                 <AsideComponent></AsideComponent>
             </aside>
-            <div className='col-span-11 py-4 px-10'>
+            <div className='col-span-12 xl:col-span-11 py-4 px-10'>
                 <div>
                     <h1 className="text-3xl mb-10 text-center">Graphs</h1>
                     <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
